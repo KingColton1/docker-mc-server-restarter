@@ -1,5 +1,12 @@
 #!/bin/bash
 
+set -e
+
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root."
+  exit 1
+fi
+
 SCRIPT_URL="https://raw.githubusercontent.com/KingColton1/docker-mc-server-restarter/main/mc-restart.sh"
 SCRIPT_PATH="/opt/mc-restart.sh"
 CRON_LINE="0 0 * * * $SCRIPT_PATH >> /var/log/mc-restart.log 2>&1"
@@ -14,6 +21,11 @@ fi
 
 echo "[INFO] Making the script executable..."
 chmod +x "$SCRIPT_PATH"
+
+if [ ! -f /var/log/mc-restart.log ]; then
+  touch /var/log/mc-restart.log
+  chmod 644 /var/log/mc-restart.log
+fi
 
 echo "[INFO] Checking if cron job already exists..."
 CRONTAB_TMP=$(mktemp)
