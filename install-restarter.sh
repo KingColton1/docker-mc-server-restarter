@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCRIPT_URL="https://github.com/KingColton1/docker-mc-server-restarter/mc-restart.sh"
+SCRIPT_URL="https://raw.githubusercontent.com/KingColton1/docker-mc-server-restarter/main/mc-restart.sh"
 SCRIPT_PATH="/opt/mc-restart.sh"
 CRON_LINE="0 0 * * * $SCRIPT_PATH >> /var/log/mc-restart.log 2>&1"
 
